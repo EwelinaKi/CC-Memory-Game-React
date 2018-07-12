@@ -42,9 +42,10 @@ export function sleep(time) {
 }
 
 export function checkEndGame(cards) {
-    const end = cards.find(allFound);
-    if (!end) {
+    const end = !cards.find(allFound);
+    if (end) {
         clearInterval(counter);
+        cards.forEach( card => card.found=false)
     }
     return end
 }
@@ -65,7 +66,9 @@ export function startTimer() {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = formatToTwoDigits(Math.floor((distance % (1000 * 60)) / 1000));
         // Output the result
-        document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+        if (document.getElementById("timer")){
+            document.getElementById("timer").innerHTML = minutes + ":" + seconds;
+        }
     }, 1000);
 }
 

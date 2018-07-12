@@ -7,7 +7,8 @@ class Deck extends Component {
     static propTypes = {
         cards: PropTypes.array.isRequired,
         background: PropTypes.string.isRequired,
-        restartGame: PropTypes.func.isRequired,
+        displayMenu: PropTypes.func.isRequired,
+        startNewGame: PropTypes.func.isRequired,
         playersChoice: PropTypes.func.isRequired,
         block: PropTypes.bool.isRequired,
     };
@@ -16,16 +17,16 @@ class Deck extends Component {
         return (
             <div className="deck">
                 <div className="header">
-                    <h1>MEMORY GAME</h1>
-                    <div class="stats">
+                    <h1 id="won">MEMORY GAME</h1>
+                    <div className="stats">
                         <button type="button"
-                                onClick={this.props.restartGame}><i className="fas fa-arrow-circle-left"></i>
+                                onClick={this.props.displayMenu}><i className="fas fa-arrow-circle-left"> </i>
                         </button>
 
                         <button type="button"
-                                onClick={this.props.restartGame}><i className="fas fa-redo"></i>
+                                onClick={this.props.startNewGame}><i className="fas fa-redo"> </i>
                         </button>
-                        <p><i className="fas fa-stopwatch"></i><span id="timer"></span></p>
+                        <p><i className="fas fa-stopwatch"> </i><span id="timer">0:00</span></p>
                     </div>
                 </div>
                 <div className="cards" id="cards">

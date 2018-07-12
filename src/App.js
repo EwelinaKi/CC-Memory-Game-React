@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import {prepareDeck, shuffle, sleep, checkEndGame, startTimer, counter} from './logic';
+import {Route, withRouter} from 'react-router-dom'
 import Deck from './deck';
 import './App.css';
 
 const MAX_NUMBERS_OF_ELEMENTS = 30;
-const BACKGROUNDS = shuffle(["bcg1", "bcg2", "bcg3"]);
+const BACKGROUNDS = shuffle(["bcg1", "bcg2", "bcg3", "bcg4"]);
 const PICTURES = ["pict_1", "pict_2", "pict_3", "pict_4", "pict_5", "pict_6", "pict_7", "pict_8", "pict_9", "pict_10",
     "pict_11", "pict_12", "pict_13", "pict_14", "pict_15", "pict_16", "pict_17", "pict_18", "pict_19", "pict_20",
     "pict_21", "pict_22", "pict_23", "pict_24", "pict_25", "pict_26", "pict_27", "pict_28", "pict_29", "pict_30",
@@ -14,10 +15,9 @@ const PICTURES = ["pict_1", "pict_2", "pict_3", "pict_4", "pict_5", "pict_6", "p
 
 class App extends Component {
     state = {
-        numberOfPairs: 2,
+        numberOfPairs: 15,
         backgroundColor: BACKGROUNDS[0],
         cards: [],
-        startGame: true,
         playersChoice: undefined,
         block: false
     };
@@ -34,29 +34,24 @@ class App extends Component {
         })
     };
 
-    startGame = () => {
+    startNewGame = () => {
         const cards = prepareDeck(this.state.numberOfPairs, PICTURES);
+        if (counter) {
+            clearInterval(counter);
+        }
         startTimer();
         this.setState({
-            startGame: false,
             cards,
             playersChoice: undefined,
             block: false,
         });
+        this.props.history.push('/deck');
     };
 
-    restartGame = () => {
+    displayMenu = () => {
         clearInterval(counter);
-        this.setState({
-            startGame: true,
-        });
+        this.props.history.push('/');
     };
-
-    componentDidUpdate() {
-        if (!this.state.startGame && !checkEndGame(this.state.cards)) {
-            alert("congrats!")
-        }
-    }
 
     playersChoice = card => {
         const playersChoice = this.state.playersChoice;
@@ -91,14 +86,17 @@ class App extends Component {
                 });
             });
         }
-    };
+        if (checkEndGame(this.state.cards)) {
+            document.getElementById("won").innerHTML = "CONGRATS YOU WON!"
+        }
 
+    };
 
     render() {
         return (
             <div className="game">
-                {this.state.startGame ?
-                    (<div className="welcome">
+                <Route exact path="/" render={() => (
+                    <div className="welcome">
                         <h1>MEMORY GAME</h1>
                         <h3>Number of pairs</h3>
                         <select onChange={this.changeCards} value={this.state.numberOfPairs}>
@@ -114,33 +112,36 @@ class App extends Component {
                              alt=""/>
                         <div onChange={this.setBackground.bind(this)}>
                             {BACKGROUNDS.map(background =>
-                                        <input type="radio"
-                                               value={background}
-                                               name="cardBcg"
-                                               key={background}
-                                        />
+                                <input type="radio"
+                                       value={background}
+                                       name="cardBcg"
+                                       key={background}
+                                />
                             )}
                         </div>
                         <button type="button"
                                 className="start"
-                                onClick={this.startGame}>Start Game!
+                                onClick={this.startNewGame}>Start Game!
                         </button>
-                    </div>)
-                    : (
-                        <div className="deck">
-                            <Deck cards={this.state.cards}
-                                  background={this.state.backgroundColor}
-                                  restartGame={this.restartGame}
-                                  playersChoice={this.playersChoice}
-                                  block={this.state.block}
-                            />
-                        </div>
-                    )
+                    </div>
+                )}/>
+
+                <Route exact path="/deck" render={() => (
+                    <div className="deck">
+                        <Deck cards={this.state.cards}
+                              background={this.state.backgroundColor}
+                              displayMenu={this.displayMenu}
+                              playersChoice={this.playersChoice}
+                              block={this.state.block}
+                              startNewGame={this.startNewGame}
+                        />
+                    </div>
+                )}/>
                 }
             </div>
         );
     }
 }
 
-export default App;
+export default withRouter(App)
 
