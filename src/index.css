@@ -24,6 +24,44 @@ button {
     font-size: 30px;
 }
 
+#btnBack, #btnRedo, #timerIcon, #timer {
+    width: 30px;
+    height: 30px;
+    box-shadow: none;
+    border:none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    margin:25px 5px;
+    font-size: 28px;
+
+}
+
+#timer {
+    margin-bottom: 3px;
+}
+
+#timerIcon {
+    margin-left: 100px;
+}
+
+#btnRedo {
+    background-image: url(icons/reset-A.png);
+}
+
+#btnRedo:hover {
+    background-image: url(icons/reset-B.png)
+}
+
+
+#btnBack {
+    background-image: url(icons/back-A.png);
+}
+
+ #btnBack:hover {
+     background-image: url(icons/back-B.png)
+ }
+
+
 button.start {
     border: 2px solid #FFF;
     font-size: 20px;
@@ -99,10 +137,12 @@ img.preview {
 .stats {
     display: flex;
     justify-content: center;
+    /*align-items: center;*/
 }
 
 .stats p {
     font-size: 30px;
+    margin: 0;
     color: #025AFA;
     margin-left: 55px;
 }
