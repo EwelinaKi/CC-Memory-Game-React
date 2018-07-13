@@ -7,9 +7,7 @@ The goal was to create Memory Game using React framework.
 
 ### How to run
 
-Play [Live Demo](https://ewelinaki.github.io/CC-Memory-Game-React/).
-
-Or clone/ download this repo and install all dependencies with command `yarn install`,
+Clone/ download this repo and install all dependencies with command `yarn install`,
 then run the server with `yarn start`
 
 
