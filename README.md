@@ -1,3 +1,5 @@
+![](https://img.shields.io/github/repo-size/EwelinaKi/CC-Memory-Game-React.svg?style=for-the-badge)
+
 # MEMORY GAME
 
 
